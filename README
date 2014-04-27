@@ -16,3 +16,14 @@ To activate virtual development environment and start coding!
 $deactivate
 
 To exit the virtual environment
+
+
+Database Creation
+
+$mysql -u user -p
+[enter password]
+>CREATE DATABASE ruralanalytics;
+>CREATE USER 'batman'@'localhost' IDENTIFIED BY 'imbatman';
+>GRANT ALL PRIVILEGES ON ruralanalytics.* TO batman@localhost IDENTIFIED BY 'imbatman'
+>quit
+
