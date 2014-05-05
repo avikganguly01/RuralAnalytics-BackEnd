@@ -56,3 +56,17 @@ class RaYear(models.Model):
     class Meta:
         managed = False
         db_table = 'ra_year'
+        
+        
+class RaActualPopulation(models.Model):
+    taluk = models.ForeignKey(RaTaluk)
+    years = models.IntegerField()
+    actual_population = models.IntegerField()
+    interpolated_population = models.FloatField()
+    
+class RaFuturePopulation(models.Model):
+    taluk = models.ForeignKey(RaTaluk)
+    years = models.IntegerField()
+    future_population = models.FloatField()
+    
+
