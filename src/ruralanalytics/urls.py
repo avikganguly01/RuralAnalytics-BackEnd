@@ -1,6 +1,6 @@
-from django.conf.urls import url, patterns, include
-from django.views.generic import TemplateView
-from rest_framework import viewsets
+from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
 from ra.views.views import *
 
 # Uncomment the next two lines to enable the admin:
@@ -10,7 +10,6 @@ from ra.views.views import *
 urlpatterns = [
 
     # url(r'^ra/template$', template, name='template'),
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^ra/categories$', categories, name='categories'),
     url(r'^ra/categories/(?P<category_id>\d+)', category, name='category'),
     url(r'^ra/parameters$', parameters, name='parameters'),
@@ -25,5 +24,5 @@ urlpatterns = [
     url(r'^ra/districts/(?P<district_id>\d+)', district, name='district'),
     url(r'^ra/values$', values, name='values'),
     url(r'^ra/values/(?P<value_id>\d+)', value, name='value')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
