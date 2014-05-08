@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from ra.views.views import *
+from ra.views.decisiontree import *
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -23,6 +24,8 @@ urlpatterns = [
     url(r'^ra/districts$', districts, name='districts'),
     url(r'^ra/districts/(?P<district_id>\d+)', district, name='district'),
     url(r'^ra/values$', values, name='values'),
-    url(r'^ra/values/(?P<value_id>\d+)', value, name='value')
+    url(r'^ra/values/(?P<value_id>\d+)', value, name='value'),
+    url(r'^ra/dtree$',dtree,name='dtree'),
+    url(r'^ra/sunburst$',sunburst,name='sunburst')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
