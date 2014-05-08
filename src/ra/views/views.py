@@ -1,9 +1,12 @@
 from rest_framework.response import Response
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from ra.serializers.serializers import *
 from ra.models.models import *
-import MySQLdb
-import collections
+import logging
+import json
+
+logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
 def categories(request):
@@ -67,8 +70,66 @@ def district(request, district_id):
 
 @api_view(['GET'])
 def values(request):
-    value_objects = RaMain.objects.all().order_by('id')
-    return Response(RaMainSerializer(value_objects).data)
+    categoryId = request.GET.get('categoryId')
+    parameterId = request.GET.get('parameterId')
+    subparameterId = request.GET.get('subparameterId')
+    districtId = request.GET.get('districtId')
+    talukId = request.GET.get('talukId')
+    yearId = request.GET.get('yearId')
+    if yearId != 0:
+        if talukId != 0:
+            if subparameterId != 0:
+               value_objects = RaCustomMain.objects.raw('select v.id, v.value, y.name as year, s.name as subparameter,t.name as taluk from ra_main v, ra_sub_parameter s, ra_taluk t, ra_year y where v.year_id=2 and v.taluk_id=2 and v.sub_parameter_id in (50,51) and v.year_id=y.id and v.taluk_id=t.id and v.sub_parameter_id=s.id')
+               lis = []
+               for value_object in value_objects:
+                   dic = dict(value_object.__dict__)
+                   del dic['_state']
+                   lis.append(dic)
+            elif subparameterId == 0:
+                if parameterId != 0:
+                    x=0
+                elif parameterId == 0:
+                    if categoryId != 0:
+                        x=0
+                    elif categoryId == 0:
+                        x=0
+        elif talukId == 0:
+            if subparameterId != 0:
+                x=0
+            elif subparameterId == 0:
+                if parameterId != 0:
+                    x=0
+                elif parameterId == 0:
+                    if categoryId != 0:
+                        x=0
+                    elif categoryId == 0:
+                        x=0
+    elif yearId == 0:
+        if talukId != 0:
+            if subparameterId != 0:
+                x=0
+            elif subparameterId == 0:
+                if parameterId != 0:
+                    x=0
+                elif parameterId == 0:
+                    if categoryId != 0:
+                        x=0
+                    elif categoryId == 0:
+                        x=0
+        elif talukId == 0:
+            if subparameterId != 0:
+                x=0
+            elif subparameterId == 0:
+                if parameterId != 0:
+                    x=0
+                elif parameterId == 0:
+                    if categoryId != 0:
+                        x=0
+                    elif categoryId == 0:
+                        x=0
+
+        # value_objects = RaMain.objects.filter(sub_parameter=subparameterId).filter(taluk=talukId).filter(year__in=[1,2])
+    return HttpResponse(json.dumps(lis), content_type="application/json")
 
 @api_view(['GET'])
 def value(request, value_id):

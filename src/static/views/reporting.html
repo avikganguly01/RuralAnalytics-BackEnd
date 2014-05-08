@@ -2,9 +2,47 @@
     <div class="page-header">
             <h1><span>Dynamic</span> Reporting</h1>
     </div>
-    <div class="Response Info"></div>
+    <div class="Response Info">
         <div class="prettyprint">
-			<h4>Testing</h4>
+            <form class="form-group">
+                   <div>
+                   <div style="width:20%; float: left; margin:10px;">
+                   <label for="select" class="control-label">Select Category </label>
+                   <select name="category" class="form-control" id="selectCategory"  ng-model="selectedCategory" ng-options="category as category.name for category in categories">
+                        <option value="">All</option>
+                   </select>
+                   <label for="select" class="control-label">Select Parameter </label>
+                   <select name="parameter" class="form-control" id="selectParameter" ng-model="selectedParameter" ng-options="parameter as parameter.name for parameter in parameters">
+                       <option value="">All</option>
+                   </select>
+                   <label for="select" class="control-label">Select Sub-Parameter </label>
+                   <select name="subparameter" class="form-control" id="selectSubparameter" ng-model="selectedSubparameter" ng-options="subparameter as subparameter.name for subparameter in subparameters">
+                       <option value="">All</option>
+                   </select>
+                   </div>
+                   <div style="width:20%; float: left; margin:10px;">
+                   <label for="select" class="control-label">Select District </label>
+                   <select name="district" class="form-control" id="selectDistrict" ng-model="selectedDistrict" ng-options="district as district.name for district in districts">
+                       <option value="">All</option>
+                   </select>
+                   <br/>
+                   <label for="select" class="control-label">Select Taluk </label>
+                   <select name="taluk" class="form-control" id="selectTaluk" ng-model="selectedTaluk" ng-options="taluk as taluk.name for taluk in taluks">
+                       <option value="">All</option>
+                   </select>
+                   </div>
+                   <div style="width:20%; float: left; margin:10px;">
+                    <label for="select" class="control-label">Select Year </label>
+                    <select name="year" class="form-control" id="selectYear" ng-model="selectedYear" ng-options="year as year.name for year in years">
+                       <option value="">All</option>
+                   </select>
+                   </div>
+                   </div>
+                   <div style="clear: both"></div> <br/>
+                   <button class="btn btn-success" ng-click="getValues(selectedCategory.id, selectedParameter.id, selectedSubparameter.id, selectedDistrict.id, selectedTaluk.id, selectedYear.id)" type="submit" style="margin:10px;">Generate Report</button>
+            </form>
+
             </pre>
+         </div>
     </div>
 </div>

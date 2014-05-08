@@ -51,6 +51,15 @@ class RaTaluk(models.Model):
         db_table = 'ra_taluk'
 
 
+class RaYear(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.IntegerField(unique=True)
+
+    class Meta:
+        managed = False
+        db_table = 'ra_year'
+        
+    
 class RaMain(models.Model):
     id = models.IntegerField(primary_key=True)
     year = models.ForeignKey('RaYear')
@@ -63,13 +72,12 @@ class RaMain(models.Model):
         db_table = 'ra_main'
 
 
-class RaYear(models.Model):
+class RaCustomMain(models.Model):
     id = models.IntegerField(primary_key=True)
-    name = models.IntegerField(unique=True)
+    value = models.IntegerField()
+    year = models.IntegerField()
+    sub_parameter = models.CharField(unique=False, max_length=45)
+    taluk = models.CharField(unique=False, max_length=45)
 
     class Meta:
         managed = False
-        db_table = 'ra_year'
-        
-    
-

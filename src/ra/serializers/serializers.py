@@ -38,13 +38,16 @@ class RaDistrictSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'taluks')
 
 
+class RaYearSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RaYear
+
+
 class RaMainSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RaMain
 
 
-class RaYearSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = RaYear

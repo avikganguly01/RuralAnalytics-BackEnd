@@ -26,7 +26,7 @@
                     <li class="dropdown-submenu" ng-repeat="category in categories">
                          <a href="#" >{{category.name}}</a>
                          <ul class="dropdown-menu" >
-                            <li ng-repeat="parameter in category.parameters"><a href="#" ng-click="getValuesWithParameterId(parameter.id)">{{parameter.name}}</a></li>
+                            <li ng-repeat="parameter in category.parameters"><a href class="ng-binding" ng-click="getValuesWithParameterId(category.id, parameter.id)">{{parameter.name}}</a></li>
                          </ul><!-- end dropdown-menu -->
                     </li>
                 </ul><!-- end dropdown-menu -->
@@ -49,7 +49,6 @@
     </div><!-- /.container-fluid -->
 </nav>
     <div class='container'>
-                 <div id="content"></div>
 					<div class="tab-content">
 
                         <div ng-view></div>

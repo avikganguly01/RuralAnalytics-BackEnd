@@ -2,7 +2,8 @@
 
 angular.module('myApp', ['ngRoute', 'restangular', 'angularFileUpload', 'myApp.services', 'myApp.controllers']).
   config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/reporting', {templateUrl: 'views/reporting.html', controller: 'FakeController'});
+    $routeProvider.when('/reporting', {templateUrl: 'views/reporting.html', controller: 'ReportController'});
+    $routeProvider.when('/viewreport/:categoryId/:parameterId/:subparameterId/:districtId/:talukId/:yearId', {templateUrl: 'views/viewreport.html', controller: 'ViewReportController'});
 	$routeProvider.otherwise({redirectTo: '/reporting'});
   }]).
   config(['RestangularProvider', function(RestangularProvider) {
