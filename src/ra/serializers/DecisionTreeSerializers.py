@@ -1,6 +1,7 @@
 import sklearn
 from sklearn import tree
 import re
+import json
 
 def json_minify(string, strip_space=True):
     tokenizer = re.compile('"|(/\*)|(\*/)|(//)|\n|\r')
@@ -125,9 +126,12 @@ def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True):
   else:
     js = js + recurse(decision_tree.tree_, 0, criterion=decision_tree.criterion)
   if (minify == True):
-    return json_minify(js)
+    return json.loads(json_minify(js))
   else :
-    return js
+    return json.loads(js)
+
+  
+  
 
 
 
@@ -206,7 +210,9 @@ def DescisionTreeSerializerForSunburst(decision_tree, feature_names=None,minify=
   else:
     js = js + recurse(decision_tree.tree_, 0, criterion=decision_tree.criterion)
   if (minify == True):
-    return json_minify(js)
+    return json.loads(json_minify(js))
   else :
-    return js
+    return json.loads(js)
+
+  
   

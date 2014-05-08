@@ -93,5 +93,5 @@ def sunburst(request):
   fnames= { 0:"Std.Week",1:"Max T °C",2:"Min T°C",3:"RH (%)",4:"MAI %", 5:"Rainfall (mm in the week)"}
   clf = tree.DecisionTreeRegressor()
   clf = clf.fit(X,Y)
-  json = DescisionTreeSerializerForSunburst(clf,feature_names=fnames,minify=False)
+  json = DescisionTreeSerializerForSunburst(clf,feature_names=fnames)
   return Response(json)  
