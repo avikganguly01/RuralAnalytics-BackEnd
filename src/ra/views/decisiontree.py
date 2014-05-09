@@ -3,7 +3,7 @@
 import sklearn
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from ra.serializers.DecisionTreeSerializers import *
+from ra.serializers.DecisionTreeSerializer import DecisionTreeSerializer
   
  
 #Dependent variables (Each element in X is an array of dependent variable values)
@@ -82,16 +82,16 @@ Y = [13.6,
 def dtree(request): 
   #Dependent variable names in the order they appear in every element in X
   fnames= { 0:"Std.Week",1:"Max T °C",2:"Min T°C",3:"RH (%)",4:"MAI %", 5:"Rainfall (mm in the week)"}
-  clf = tree.DecisionTreeRegressor()
+  clf = sklearn.tree.DecisionTreeRegressor()
   clf = clf.fit(X,Y)
-  json = DecisionTreeSerializer(clf,feature_names=fnames)
-  return Response(json)
+  treejson = DecisionTreeSerializer(clf,feature_names=fnames)
+  return Response(treejson)
 
 
 @api_view(['GET'])
 def sunburst(request):
   fnames= { 0:"Std.Week",1:"Max T °C",2:"Min T°C",3:"RH (%)",4:"MAI %", 5:"Rainfall (mm in the week)"}
-  clf = tree.DecisionTreeRegressor()
+  clf = sklearn.tree.DecisionTreeRegressor()
   clf = clf.fit(X,Y)
-  json = DescisionTreeSerializerForSunburst(clf,feature_names=fnames)
-  return Response(json)  
+  treejson = DecisionTreeSerializer(clf,feature_names=fnames,sunburst=True)
+  return Response(treejson)  

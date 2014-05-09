@@ -3,55 +3,15 @@ from sklearn import tree
 import re
 import json
 
-def json_minify(string, strip_space=True):
-    tokenizer = re.compile('"|(/\*)|(\*/)|(//)|\n|\r')
-    end_slashes_re = re.compile(r'(\\)*$')
-
-    in_string = False
-    in_multi = False
-    in_single = False
-
-    new_str = []
-    index = 0
-
-    for match in re.finditer(tokenizer, string):
-
-        if not (in_multi or in_single):
-            tmp = string[index:match.start()]
-            if not in_string and strip_space:
-                # replace white space as defined in standard
-                tmp = re.sub('[ \t\n\r]+', '', tmp)
-            new_str.append(tmp)
-
-        index = match.end()
-        val = match.group()
-
-        if val == '"' and not (in_multi or in_single):
-            escaped = end_slashes_re.search(string, 0, match.start())
-
-            # start of string or unescaped quote character to end string
-            if not in_string or (escaped is None or len(escaped.group()) % 2 == 0):
-                in_string = not in_string
-            index -= 1 # include " character in next catch
-        elif not (in_string or in_multi or in_single):
-            if val == '/*':
-                in_multi = True
-            elif val == '//':
-                in_single = True
-        elif val == '*/' and in_multi and not (in_string or in_single):
-            in_multi = False
-        elif val in '\r\n' and not (in_multi or in_string) and in_single:
-            in_single = False
-        elif not ((in_multi or in_single) or (val in ' \r\n\t' and strip_space)):
-            new_str.append(val)
-
-    new_str.append(string[index:])
-    return ''.join(new_str)
-
-
-def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True):
+def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True, sunburst=False):
  
   js = ""
+  if(sunburst==True):
+    formatstr_inner_node = '"predicate": { "field" : "%s", "operator" : "%s", "value": %s}, "error": %s, "samples": %s, "type":"split"'
+    formatstr_leaf_node = '"samples": %s, "value": %s, "error": %s ,"type":"leaf"'
+  else:
+    formatstr_inner_node = '"label": "%s %s %s", "error": %s, "samples": %s, "type":"split"'
+    formatstr_leaf_node = '"samples": %s, "value": [%s], "error": %s ,"type":"leaf"'
  
   def node_to_str(tree, node_id, criterion):
     if not isinstance(criterion, sklearn.tree.tree.six.string_types):
@@ -64,7 +24,7 @@ def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True):
     jsonValue = ', '.join([str(x) for x in value])
  
     if tree.children_left[node_id] == sklearn.tree._tree.TREE_LEAF:
-      return '"samples": %s, "value": [%s], "error": %s ,"type":"leaf"' \
+      return formatstr_leaf_node \
              % (tree.n_node_samples[node_id],
                 jsonValue,
                 tree.impurity[node_id])
@@ -81,7 +41,7 @@ def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True):
         ruleType = "<="
         ruleValue = "%.4f" % tree.threshold[node_id]
  
-      return '"label": "%s %s %s", "error": %s, "samples": %s, "type":"split"' \
+      return formatstr_inner_node \
              % (feature,
                 ruleType,
                 ruleValue,
@@ -125,10 +85,7 @@ def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True):
     js = js + recurse(decision_tree, 0, criterion="impurity")
   else:
     js = js + recurse(decision_tree.tree_, 0, criterion=decision_tree.criterion)
-  if (minify == True):
-    return json.loads(json_minify(js))
-  else :
-    return json.loads(js)
+  return json.loads(js)
 
   
   
@@ -209,10 +166,7 @@ def DescisionTreeSerializerForSunburst(decision_tree, feature_names=None,minify=
     js = js + recurse(decision_tree, 0, criterion="impurity")
   else:
     js = js + recurse(decision_tree.tree_, 0, criterion=decision_tree.criterion)
-  if (minify == True):
-    return json.loads(json_minify(js))
-  else :
-    return json.loads(js)
+  return json.loads(js)
 
   
   
