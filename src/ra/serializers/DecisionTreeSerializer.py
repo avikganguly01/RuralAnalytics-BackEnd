@@ -1,7 +1,9 @@
 import sklearn
 from sklearn import tree
-import re
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True, sunburst=False):
  
@@ -61,20 +63,20 @@ def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True, sunbu
          tabs + "  " + node_to_str(tree, node_id, criterion)
  
     if left_child != sklearn.tree._tree.TREE_LEAF:
-      js = js + ', "children": {'
-      js = js + "\n" + \
-           tabs + '  "0": ' + \
+      js = js + ', "children": ['
+      js = js + \
+           tabs + \
            recurse(tree, \
                    left_child, \
                    criterion=criterion, \
                    parent=node_id, \
                    depth=depth + 1) + ",\n" + \
-           tabs + '  "1": ' + \
+           tabs + \
            recurse(tree, \
                    right_child, \
                    criterion=criterion, \
                    parent=node_id,
-                   depth=depth + 1) + "}"
+                   depth=depth + 1) + "]"
  
     js = js + tabs + "\n" + \
          tabs + "}"
@@ -85,13 +87,6 @@ def DecisionTreeSerializer(decision_tree, feature_names=None, minify=True, sunbu
     js = js + recurse(decision_tree, 0, criterion="impurity")
   else:
     js = js + recurse(decision_tree.tree_, 0, criterion=decision_tree.criterion)
+  logger.error(js)
   return json.loads(js)
 
-  
-  
-
-
-
-
-  
-  

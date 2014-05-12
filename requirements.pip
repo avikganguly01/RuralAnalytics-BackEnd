@@ -1,5 +1,6 @@
 django==1.6.2
 MySQL-Python
 djangorestframework
+numpy
 scipy
 scikit-learn

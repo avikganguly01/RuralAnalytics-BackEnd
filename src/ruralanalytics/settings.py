@@ -64,7 +64,7 @@ LOGGING = {
         }
     },
     'loggers': {
-        'ra.views.views': {
+        'ra.serializers.DecisionTreeSerializer': {
             'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
