@@ -41,7 +41,57 @@
                    <div style="clear: both"></div> <br/>
                    <button class="btn btn-success" ng-click="getValues(selectedCategory.id, selectedParameter.id, selectedSubparameter.id, selectedDistrict.id, selectedTaluk.id, selectedYear.id)" type="submit" style="margin:10px;">Generate Report</button>
             </form>
-
+            <br />
+            <div ng-show="(values).length">
+            <div class="form-group has-success">
+            <label class="control-label" for="inputSuccess" style="float:left; margin-top:5px;" >Search </label>
+            <input ng-model="query" class="form-control" id="inputSuccess" type="search" style="width:20%;float:left; margin-left:20px;" />
+            </div> <br/>
+            <table class="table table-striped table-hover ">
+                <thead ng-show="(values|filter:query).length">
+                <th ng-if="values[0].category!=null" class="category">
+                    <a href ng-click="orderByField='category'; reverseSort = !reverseSort">
+                        Category <span ng-show="orderByField == 'category'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+                    </a>
+                </th>
+                <th ng-if="values[0].parameter!=null" class="parameter">
+                    <a href ng-click="orderByField='parameter'; reverseSort = !reverseSort">
+                        Parameter <span ng-show="orderByField == 'parameter'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+                    </a>
+                </th>
+                <th class="subparameter">
+                    <a href ng-click="orderByField='subparameter'; reverseSort = !reverseSort">
+                        Subparameter <span ng-show="orderByField == 'subparameter'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+                    </a>
+                </th>
+                <th class="year">
+                    <a href ng-click="orderByField='year'; reverseSort = !reverseSort">
+                        Year <span ng-show="orderByField == 'year'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+                    </a>
+                </th>
+                <th class="taluk">
+                    <a href ng-click="orderByField='taluk'; reverseSort = !reverseSort">
+                        Taluk <span ng-show="orderByField == 'taluk'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+                    </a>
+                </th>
+                <th class="value">
+                    <a href ng-click="orderByField='value'; reverseSort = !reverseSort">
+                        Value <span ng-show="orderByField == 'value'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+                    </a>
+                </th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="value in values|filter:query|orderBy:orderByField:reverseSort" class="success">
+                    <td ng-if="value.category!=null">{{value.category}}</td>
+                    <td ng-if="value.parameter!=null">{{value.parameter}}</td>
+                    <td>{{value.subparameter}}</td>
+                    <td>{{value.year}}</td>
+                    <td>{{value.taluk}}</td>
+                    <td>{{value.value}}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
             </pre>
          </div>
     </div>

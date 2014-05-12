@@ -4,6 +4,8 @@ angular.module('myApp', ['ngRoute', 'restangular', 'angularFileUpload', 'myApp.s
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/reporting', {templateUrl: 'views/reporting.html', controller: 'ReportController'});
     $routeProvider.when('/viewreport/:categoryId/:parameterId/:subparameterId/:districtId/:talukId/:yearId', {templateUrl: 'views/viewreport.html', controller: 'ViewReportController'});
+    $routeProvider.when('/infographics', {templateUrl: 'views/infographics.html', controller: 'InfographicsController'});
+    $routeProvider.when('/trees', {templateUrl: 'views/trees.html', controller: 'TreeController'});
 	$routeProvider.otherwise({redirectTo: '/reporting'});
   }]).
   config(['RestangularProvider', function(RestangularProvider) {

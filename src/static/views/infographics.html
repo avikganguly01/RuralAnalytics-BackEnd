@@ -1,0 +1,60 @@
+<div class="content-main">
+    <div class="page-header">
+            <h1>Infographics</h1>
+    </div>
+    <div class="Response Info">
+        <div class="prettyprint">
+            <form class="form-group">
+                   <div>
+                   <div style="width:20%; float: left; margin:10px;">
+                   <label for="select" class="control-label">Select Category </label>
+                   <select name="category" class="form-control" id="selectCategory"  ng-model="selectedCategory" ng-options="category as category.name for category in categories">
+                        <option value="">None</option>
+                   </select>
+                   <label for="select" class="control-label">Select Parameter </label>
+                   <select name="parameter" class="form-control" id="selectParameter" ng-model="selectedParameter" ng-options="parameter as parameter.name for parameter in parameters">
+                       <option value="">None</option>
+                   </select>
+                   <label for="select" class="control-label">Select Sub-Parameter </label>
+                   <select name="subparameter" class="form-control" id="selectSubparameter" ng-model="selectedSubparameter" ng-options="subparameter as subparameter.name for subparameter in subparameters">
+                       <option value="">None</option>
+                   </select>
+                   </div>
+                   <div style="width:20%; float: left; margin:10px;">
+                    <label for="select" class="control-label">Select District </label>
+                    <select name="district" class="form-control" id="selectDistrict" ng-model="selectedDistrict" ng-options="district as district.name for district in districts">
+                       <option value="">None</option>
+                   </select>
+                   </div>
+                   <div style="width:20%; float: left; margin:10px;">
+                    <label for="select" class="control-label">Select Chart Type </label>
+                    <select name="chart" class="form-control" id="selectChart" ng-model="selectedChart">
+                       <option value="">Pie Chart</option>
+                       <option value="bar">Bar Chart</option>
+                       <option value="donut">Donut Chart</option>
+                   </select>
+                   </div>
+                   </div>
+                   <div style="clear: both"></div> <br/>
+                   <button class="btn btn-success" ng-click="getValues(selectedSubparameter.id, selectedDistrict.id, selectedChart)" type="submit" style="margin:10px;">Generate Infographics</button>
+            </form>
+            <br />
+            <div id="charts" ng-show="(values2012).length">
+            <h3 style="float:left; width:50%;">Year - 2010</h3>
+            <h3 style="float:left; width:50%;">Year - 2011</h3>
+            <div id="chart1" style="height:400px; width:50%; float:left;">
+                <svg></svg>
+            </div>
+            <div id="chart2" style="height:400px; width:50%; float:left;">
+                <svg></svg>
+            </div>
+            <h3 >Year - 2012</h3>
+            <div id="chart3" style="height:400px; width:50%; float:left">
+                <svg></svg>
+            </div>
+            <div style="clear: both"></div>
+            </div>
+         </div>
+    </div>
+
+</div>

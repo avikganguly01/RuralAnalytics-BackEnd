@@ -11,6 +11,9 @@
   padding: 15px;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
 }
 .prettyprint.linenums {
   -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
